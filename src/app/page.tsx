@@ -9,6 +9,7 @@ import type { User } from '@supabase/supabase-js'
 
 export default function HomePage() {
   const [user, setUser] = useState<User | null>(null)
+  const [profile, setProfile] = useState<any>(null)
   const [loading, setLoading] = useState(true)
   const supabase = createClient()
 
@@ -17,6 +18,18 @@ export default function HomePage() {
     const getUser = async () => {
       const { data: { user } } = await supabase.auth.getUser()
       setUser(user)
+      
+      if (user) {
+        // Profile bilgisini çek
+        const { data: profileData } = await supabase
+          .from('profiles')
+          .select('full_name')
+          .eq('id', user.id)
+          .single()
+        
+        setProfile(profileData)
+      }
+      
       setLoading(false)
     }
 
@@ -24,8 +37,21 @@ export default function HomePage() {
 
     // Auth state değişikliklerini dinle
     const { data: { subscription } } = supabase.auth.onAuthStateChange(
-      (event, session) => {
+      async (event, session) => {
         setUser(session?.user ?? null)
+        
+        if (session?.user) {
+          const { data: profileData } = await supabase
+            .from('profiles')
+            .select('full_name')
+            .eq('id', session.user.id)
+            .single()
+          
+          setProfile(profileData)
+        } else {
+          setProfile(null)
+        }
+        
         setLoading(false)
       }
     )
@@ -59,7 +85,7 @@ export default function HomePage() {
               {user ? (
                 <>
                   <span className="text-sm text-gray-600">
-                    Hoş geldin, {user.email}
+                    Hoş geldin, {profile?.full_name || user.email?.split('@')[0] || 'Kullanıcı'}
                   </span>
                   <Button variant="ghost" onClick={handleSignOut}>
                     Çıkış Yap

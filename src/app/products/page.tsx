@@ -148,17 +148,20 @@ export default function ProductsPage() {
                     </span>
                     <Button 
                       size="sm"
+                      className="hover:scale-105 transition-transform duration-200"
                       onClick={() => {
                         addToCart(product)
                         // Basit feedback
                         const button = document.activeElement as HTMLButtonElement
                         const originalText = button.textContent
-                        button.textContent = '✓ Eklendi'
+                        button.textContent = '✓ Eklendi!'
                         button.disabled = true
+                        button.className = button.className.replace('hover:scale-105', '') + ' bg-green-600 hover:bg-green-600'
                         setTimeout(() => {
                           button.textContent = originalText
                           button.disabled = false
-                        }, 1000)
+                          button.className = button.className.replace(' bg-green-600 hover:bg-green-600', '') + ' hover:scale-105'
+                        }, 1500)
                       }}
                     >
                       Sepete Ekle
