@@ -1,49 +1,8 @@
-'use client'
-
 import Link from 'next/link'
-import { useEffect, useState } from 'react'
-import { createClient } from '@/lib/supabase/client'
 import { Button } from '@/components/ui/button'
 import { Card, CardHeader, CardTitle, CardDescription } from '@/components/ui/card'
-import type { User } from '@supabase/supabase-js'
 
 export default function HomePage() {
-  const [user, setUser] = useState<User | null>(null)
-  const [loading, setLoading] = useState(true)
-  const supabase = createClient()
-
-  useEffect(() => {
-    // Mevcut kullanıcıyı kontrol et
-    const getUser = async () => {
-      const { data: { user } } = await supabase.auth.getUser()
-      setUser(user)
-      setLoading(false)
-    }
-
-    getUser()
-
-    // Auth state değişikliklerini dinle
-    const { data: { subscription } } = supabase.auth.onAuthStateChange(
-      (event, session) => {
-        setUser(session?.user ?? null)
-        setLoading(false)
-      }
-    )
-
-    return () => subscription.unsubscribe()
-  }, [supabase.auth])
-
-  const handleSignOut = async () => {
-    await supabase.auth.signOut()
-  }
-
-  if (loading) {
-    return (
-      <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 flex items-center justify-center">
-        <div className="text-lg">Yükleniyor...</div>
-      </div>
-    )
-  }
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100">
       {/* Header */}
@@ -56,25 +15,12 @@ export default function HomePage() {
               </h1>
             </div>
             <div className="flex items-center space-x-4">
-              {user ? (
-                <>
-                  <span className="text-sm text-gray-600">
-                    Hoş geldin, {user.email}
-                  </span>
-                  <Button variant="ghost" onClick={handleSignOut}>
-                    Çıkış Yap
-                  </Button>
-                </>
-              ) : (
-                <>
-                  <Link href="/login">
-                    <Button variant="ghost">Giriş Yap</Button>
-                  </Link>
-                  <Link href="/signup">
-                    <Button>Kayıt Ol</Button>
-                  </Link>
-                </>
-              )}
+              <Link href="/login">
+                <Button variant="ghost">Giriş Yap</Button>
+              </Link>
+              <Link href="/signup">
+                <Button>Kayıt Ol</Button>
+              </Link>
             </div>
           </div>
         </div>
