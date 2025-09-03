@@ -13,7 +13,6 @@ export default function ProductsPage() {
   const [products, setProducts] = useState<Product[]>([])
   const [loading, setLoading] = useState(true)
   const [searchTerm, setSearchTerm] = useState('')
-  const [selectedCategory, setSelectedCategory] = useState<string>('')
   const { addToCart, state } = useCart()
   const supabase = createClient()
 
@@ -48,8 +47,7 @@ export default function ProductsPage() {
   const filteredProducts = products.filter(product => {
     const matchesSearch = product.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
                          product.description?.toLowerCase().includes(searchTerm.toLowerCase())
-    const matchesCategory = !selectedCategory || product.category_id === selectedCategory
-    return matchesSearch && matchesCategory
+    return matchesSearch
   })
 
   if (loading) {

@@ -2,14 +2,11 @@
 
 import { useCart } from '@/contexts/cart-context'
 import { Button } from '@/components/ui/button'
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
-import { Input } from '@/components/ui/input'
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import Link from 'next/link'
-import { useState } from 'react'
 
 export default function CartPage() {
   const { state, updateQuantity, removeFromCart, clearCart } = useCart()
-  const [quantities, setQuantities] = useState<{ [key: string]: number }>({})
 
   const handleQuantityChange = (productId: string, newQuantity: number) => {
     if (newQuantity < 1) {
