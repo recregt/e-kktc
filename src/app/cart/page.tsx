@@ -1,5 +1,6 @@
 'use client'
 
+import { useRouter } from 'next/navigation'
 import { useCart } from '@/contexts/cart-context'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
@@ -7,6 +8,7 @@ import Link from 'next/link'
 
 export default function CartPage() {
   const { state, updateQuantity, removeFromCart, clearCart } = useCart()
+  const router = useRouter()
 
   const handleQuantityChange = (productId: string, newQuantity: number) => {
     if (newQuantity < 1) {
@@ -17,8 +19,8 @@ export default function CartPage() {
   }
 
   const handleCheckout = () => {
-    // Şimdilik basit alert, sonra gerçek checkout sayfasına yönlendirilecek
-    alert(`Toplam ₺${state.totalPrice.toLocaleString('tr-TR')} - Kapıda Ödeme ile sipariş verilecek!`)
+    // Checkout sayfasına yönlendir
+    router.push('/checkout')
   }
 
   if (state.items.length === 0) {

@@ -282,6 +282,13 @@ CREATE POLICY "Users can view own order items" ON order_items
     )
   );
 
+CREATE POLICY "Users can create order items" ON order_items
+  FOR INSERT WITH CHECK (
+    order_id IN (
+      SELECT id FROM orders WHERE user_id = auth.uid()
+    )
+  );
+
 -- Addresses policies
 ALTER TABLE addresses ENABLE ROW LEVEL SECURITY;
 
