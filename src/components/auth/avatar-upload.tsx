@@ -118,7 +118,7 @@ export default function AvatarUpload({ user, currentAvatarUrl, onAvatarUpdate }:
     } catch (error) {
       console.error('Avatar upload exception:', error)
       console.error('Error details:', JSON.stringify(error, null, 2))
-      alert(`Beklenmeyen bir hata oluştu: ${(error as any)?.message || 'Bilinmeyen hata'}`)
+      alert(`Beklenmeyen bir hata oluştu: ${error instanceof Error ? error.message : 'Bilinmeyen hata'}`)
     } finally {
       setUploading(false)
       if (fileInputRef.current) {

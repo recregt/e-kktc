@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect, useCallback } from 'react'
+import { useEffect, useState, useCallback } from 'react'
 import { useRouter } from 'next/navigation'
 import { createClient } from '@/lib/supabase/client'
 import { Button } from '@/components/ui/button'
@@ -47,31 +47,7 @@ export default function ProfilePage() {
   const router = useRouter()
   const supabase = createClient()
 
-  const checkUser = useCallback(async () => {
-    try {
-      const { data: { user } } = await supabase.auth.getUser()
-      
-      if (!user) {
-        router.push('/login')
-        return
-      }
-
-      setUser(user)
-      await fetchProfile(user.id)
-      await fetchOrders(user.id)
-    } catch (error) {
-      console.error('Error checking user:', error)
-      router.push('/login')
-    } finally {
-      setLoading(false)
-    }
-  }, [router, supabase])
-
-  useEffect(() => {
-    checkUser()
-  }, [checkUser])
-
-  const fetchProfile = async (userId: string) => {
+  const fetchProfile = useCallback(async (userId: string) => {
     try {
       const { data, error } = await supabase
         .from('profiles')
@@ -96,9 +72,9 @@ export default function ProfilePage() {
     } catch (error) {
       console.error('Error:', error)
     }
-  }
+  }, [supabase])
 
-  const fetchOrders = async (userId: string) => {
+  const fetchOrders = useCallback(async (userId: string) => {
     try {
       const { data, error } = await supabase
         .from('orders')
@@ -124,7 +100,31 @@ export default function ProfilePage() {
     } catch (error) {
       console.error('Error:', error)
     }
-  }
+  }, [supabase])
+
+  const checkUser = useCallback(async () => {
+    try {
+      const { data: { user } } = await supabase.auth.getUser()
+      
+      if (!user) {
+        router.push('/login')
+        return
+      }
+
+      setUser(user)
+      await fetchProfile(user.id)
+      await fetchOrders(user.id)
+    } catch (error) {
+      console.error('Error checking user:', error)
+      router.push('/login')
+    } finally {
+      setLoading(false)
+    }
+  }, [router, supabase, fetchProfile, fetchOrders])
+
+  useEffect(() => {
+    checkUser()
+  }, [checkUser])
 
   const handleSaveProfile = async () => {
     if (!user) return

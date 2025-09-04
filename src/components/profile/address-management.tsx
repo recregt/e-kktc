@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useCallback } from 'react'
 import { createClient } from '@/lib/supabase/client'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
@@ -57,11 +57,7 @@ export default function AddressManagement({ user }: AddressManagementProps) {
   const [saving, setSaving] = useState(false)
   const supabase = createClient()
 
-  useEffect(() => {
-    fetchAddresses()
-  }, [])
-
-  const fetchAddresses = async () => {
+  const fetchAddresses = useCallback(async () => {
     try {
       const { data, error } = await supabase
         .from('addresses')
@@ -81,7 +77,11 @@ export default function AddressManagement({ user }: AddressManagementProps) {
     } finally {
       setLoading(false)
     }
-  }
+  }, [user.id, supabase])
+
+  useEffect(() => {
+    fetchAddresses()
+  }, [fetchAddresses])
 
   const handleAddAddress = () => {
     setEditingAddress(null)
@@ -156,13 +156,14 @@ export default function AddressManagement({ user }: AddressManagementProps) {
       
       // Supabase error'larını daha detaylı logla
       if (error && typeof error === 'object') {
-        console.error('Error message:', (error as any).message)
-        console.error('Error code:', (error as any).code)
-        console.error('Error details:', (error as any).details)
-        console.error('Error hint:', (error as any).hint)
+        const supabaseError = error as { message?: string; code?: string; details?: string; hint?: string }
+        console.error('Error message:', supabaseError.message)
+        console.error('Error code:', supabaseError.code)
+        console.error('Error details:', supabaseError.details)
+        console.error('Error hint:', supabaseError.hint)
       }
       
-      alert(`Adres kaydedilirken hata oluştu: ${(error as any)?.message || 'Bilinmeyen hata'}`)
+      alert(`Adres kaydedilirken hata oluştu: ${error instanceof Error ? error.message : 'Bilinmeyen hata'}`)
     } finally {
       setSaving(false)
     }
