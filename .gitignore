@@ -57,3 +57,12 @@ Thumbs.db
 *-new.*
 *-old.*
 *-backup.*
+
+# Development/Debug files (prevent re-creation)
+**/supabase-test/
+fix-*.sql
+supabase-verification-queries.sql
+*-debug.*
+*-test.*
+debug-*
+test-*
