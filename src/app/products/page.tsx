@@ -60,32 +60,6 @@ export default function ProductsPage() {
 
   return (
     <div className="min-h-screen bg-gray-50">
-      {/* Header */}
-      <header className="bg-white shadow-sm">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center h-16">
-            <Link href="/" className="text-2xl font-bold text-gray-900">
-              Kıbrıs E-ticaret
-            </Link>
-            <div className="flex items-center space-x-4">
-              <Link href="/cart">
-                <Button variant="ghost" className="relative">
-                  🛒 Sepet
-                  {state.totalItems > 0 && (
-                    <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">
-                      {state.totalItems}
-                    </span>
-                  )}
-                </Button>
-              </Link>
-              <Link href="/">
-                <Button variant="ghost">Ana Sayfa</Button>
-              </Link>
-            </div>
-          </div>
-        </div>
-      </header>
-
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <div className="mb-8">
           <h1 className="text-3xl font-bold text-gray-900 mb-4">Ürünler</h1>

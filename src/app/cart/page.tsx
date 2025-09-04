@@ -27,25 +27,6 @@ export default function CartPage() {
   if (state.items.length === 0) {
     return (
       <div className="min-h-screen bg-gray-50">
-        {/* Header */}
-        <header className="bg-white shadow-sm">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="flex justify-between items-center h-16">
-              <Link href="/" className="text-2xl font-bold text-gray-900">
-                Kıbrıs E-ticaret
-              </Link>
-              <div className="flex items-center space-x-4">
-                <Link href="/products">
-                  <Button variant="ghost">Ürünler</Button>
-                </Link>
-                <Link href="/">
-                  <Button variant="ghost">Ana Sayfa</Button>
-                </Link>
-              </div>
-            </div>
-          </div>
-        </header>
-
         {/* Empty Cart */}
         <main className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
           <div className="text-center">
@@ -69,25 +50,6 @@ export default function CartPage() {
 
   return (
     <div className="min-h-screen bg-gray-50">
-      {/* Header */}
-      <header className="bg-white shadow-sm">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center h-16">
-            <Link href="/" className="text-2xl font-bold text-gray-900">
-              Kıbrıs E-ticaret
-            </Link>
-            <div className="flex items-center space-x-4">
-              <Link href="/products">
-                <Button variant="ghost">Ürünler</Button>
-              </Link>
-              <Link href="/">
-                <Button variant="ghost">Ana Sayfa</Button>
-              </Link>
-            </div>
-          </div>
-        </div>
-      </header>
-
       <main className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <div className="flex items-center justify-between mb-8">
           <h1 className="text-3xl font-bold text-gray-900">
