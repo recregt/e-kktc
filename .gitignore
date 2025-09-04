@@ -66,3 +66,8 @@ supabase-verification-queries.sql
 *-test.*
 debug-*
 test-*
+
+# Old SQL files (moved to database/schema/)
+supabase-schema.sql
+supabase-addresses-setup.sql
+supabase-storage-setup.sql
