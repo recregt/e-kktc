@@ -5,6 +5,7 @@ import { useCart } from '@/contexts/cart-context'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import Link from 'next/link'
+import Image from 'next/image'
 
 export default function CartPage() {
   const { state, updateQuantity, removeFromCart, clearCart } = useCart()
@@ -108,12 +109,13 @@ export default function CartPage() {
               <Card key={item.product.id} className="overflow-hidden">
                 <div className="flex">
                   {/* Product Image */}
-                  <div className="w-24 h-24 bg-gray-200 flex-shrink-0">
+                  <div className="w-24 h-24 bg-gray-200 flex-shrink-0 relative">
                     {item.product.images && item.product.images[0] ? (
-                      <img
+                      <Image
                         src={item.product.images[0]}
                         alt={item.product.name}
-                        className="w-full h-full object-cover"
+                        fill
+                        className="object-cover"
                       />
                     ) : (
                       <div className="w-full h-full flex items-center justify-center text-gray-400 text-sm">
