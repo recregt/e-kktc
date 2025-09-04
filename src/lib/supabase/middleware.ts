@@ -124,6 +124,27 @@ export async function updateSession(request: NextRequest) {
   // Check if it's a file extension (likely a static file)
   const isFileRequest = /\.[a-zA-Z0-9]+$/.test(request.nextUrl.pathname)
 
+  // Check if this is a valid route by looking at known patterns
+  const validRoutePatterns = [
+    /^\/$/,                           // Home page
+    /^\/login$/,                      // Login page
+    /^\/signup$/,                     // Signup page
+    /^\/products(\/.*)?$/,            // Products pages
+    /^\/cart$/,                       // Cart page
+    /^\/checkout$/,                   // Checkout page
+    /^\/profile$/,                    // Profile page
+    /^\/order-success$/,              // Order success page
+    /^\/unauthorized$/,               // Unauthorized page
+    /^\/api\/.*$/,                    // API routes
+    /^\/_next\/.*$/,                  // Next.js internals
+    /^\/favicon\.ico$/,               // Favicon
+    /^\/.*\.(svg|png|jpg|jpeg|gif|webp|ico)$/, // Static images
+  ]
+
+  const isValidRoute = validRoutePatterns.some(pattern => 
+    pattern.test(request.nextUrl.pathname)
+  )
+
   const isPublicRoute = publicRoutes.some(route => 
     request.nextUrl.pathname === route || 
     request.nextUrl.pathname.startsWith(route + '/')
@@ -132,6 +153,15 @@ export async function updateSession(request: NextRequest) {
   // Don't redirect static files, API routes, or files with extensions
   if (isStaticRoute || isFileRequest) {
     // Add rate limit headers to response
+    Object.entries(rateLimitHeaders).forEach(([key, value]) => {
+      supabaseResponse.headers.set(key, value)
+    })
+    return supabaseResponse
+  }
+
+  // If it's an invalid route, let Next.js handle it (will show 404 page)
+  if (!isValidRoute) {
+    // Add rate limit headers and let Next.js show 404
     Object.entries(rateLimitHeaders).forEach(([key, value]) => {
       supabaseResponse.headers.set(key, value)
     })
