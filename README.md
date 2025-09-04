@@ -21,6 +21,10 @@ A modern e-commerce platform MVP developed for the North Cyprus market.
 - **Product Catalog**: Browse and search products with filtering
 - **Shopping Cart**: Add/remove items with persistent state
 - **User Authentication**: Sign up/sign in with Supabase Auth
+- **User Profile Dashboard**: Complete profile management system
+  - **Avatar Upload**: Profile picture management with Supabase Storage
+  - **Address Management**: CRUD operations for delivery addresses
+  - **Order History**: Advanced filtering and order tracking
 - **Checkout System**: Complete order flow with customer information
 - **Cash on Delivery**: COD payment method support
 - **Order Management**: Order creation and tracking
@@ -45,9 +49,32 @@ src/
 │   ├── checkout/          # Checkout process
 │   ├── order-success/     # Order confirmation
 │   ├── products/          # Product catalog
+│   ├── profile/           # User profile dashboard
 │   ├── layout.tsx         # Root layout
 │   └── page.tsx           # Homepage
 ├── components/            # Reusable components
+│   ├── auth/              # Authentication components
+│   ├── layout/            # Layout components
+│   ├── profile/           # Profile management components
+│   └── ui/                # UI components (buttons, inputs, etc.)
+├── contexts/              # React Context providers
+├── lib/                   # Utilities and configurations
+│   ├── supabase/          # Supabase client configuration
+│   └── validations/       # Form validation schemas
+└── types/                 # TypeScript type definitions
+
+database/                   # Database schema and migrations
+├── schema/                # SQL schema files
+│   ├── tables.sql         # Main database tables
+│   ├── addresses.sql      # Address management
+│   └── storage.sql        # File storage setup
+├── migrations/            # Database migrations
+└── seeds/                 # Seed data
+
+docs/                      # Documentation
+├── setup.md              # Setup instructions
+├── deployment.md         # Deployment guide
+└── api.md                # API documentation
 │   ├── ui/                # Base UI components (button, card, input)
 │   └── auth/              # Authentication components
 ├── contexts/              # React Context providers
@@ -92,9 +119,12 @@ NEXT_PUBLIC_SUPABASE_ANON_KEY=your_supabase_anon_key
 ```
 
 5. **Database setup:**
-Run the SQL schema in your Supabase SQL Editor:
+Run the SQL schema files in your Supabase SQL Editor in this order:
 ```bash
-# Execute the contents of supabase-schema.sql in Supabase dashboard
+# Execute these files in Supabase SQL Editor:
+1. database/schema/tables.sql      # Main tables and RLS policies
+2. database/schema/addresses.sql   # Address management
+3. database/schema/storage.sql     # File storage setup
 ```
 
 6. **Start development server:**
@@ -148,6 +178,13 @@ NEXT_PUBLIC_SUPABASE_ANON_KEY=your_supabase_anon_key
 - **Protected routes** with middleware
 - **Input validation** with proper sanitization
 - **HTTPS** enforced in production
+
+## 📚 Documentation
+
+- **[Setup Guide](docs/setup.md)** - Detailed setup instructions
+- **[Deployment Guide](docs/deployment.md)** - Production deployment steps
+- **[API Documentation](docs/api.md)** - API endpoints and usage
+- **[Database Schema](database/README.md)** - Database structure and setup
 
 ## 🎨 UI/UX Features
 
