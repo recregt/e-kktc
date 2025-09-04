@@ -126,22 +126,21 @@ export interface OrderItem {
 }
 
 export interface Address {
-  id?: string
-  user_id?: string
-  type: 'shipping' | 'billing'
+  id: string
+  user_id: string
+  title: string
   first_name: string
   last_name: string
-  company?: string
+  phone?: string
   address_line_1: string
   address_line_2?: string
   city: string
-  state?: string
-  postal_code: string
+  district?: string
+  postal_code?: string
   country: string
-  phone?: string
   is_default: boolean
-  created_at?: string
-  updated_at?: string
+  created_at: string
+  updated_at: string
 }
 
 export interface ApiResponse<T> {
