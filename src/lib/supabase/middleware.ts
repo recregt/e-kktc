@@ -1,7 +1,48 @@
 import { createServerClient } from '@supabase/ssr'
 import { type NextRequest, NextResponse } from 'next/server'
+import { checkRateLimit, getRateLimitHeaders } from '@/lib/rate-limit'
 
 export async function updateSession(request: NextRequest) {
+  // Get client IP for rate limiting
+  const clientIP = request.headers.get('x-forwarded-for') 
+    ?? request.headers.get('x-real-ip') 
+    ?? request.headers.get('cf-connecting-ip')
+    ?? 'unknown'
+
+  // Rate limiting for API routes and sensitive endpoints
+  const requestPathname = request.nextUrl.pathname.toLowerCase()
+  let rateLimitEndpoint = 'default'
+  
+  if (requestPathname.startsWith('/api/auth') || requestPathname.includes('login') || requestPathname.includes('signup')) {
+    rateLimitEndpoint = '/api/auth'
+  } else if (requestPathname.includes('forgot-password') || requestPathname.includes('reset-password')) {
+    rateLimitEndpoint = '/api/forgot-password'
+  } else if (requestPathname.includes('upload')) {
+    rateLimitEndpoint = '/api/upload'
+  } else if (requestPathname.includes('contact')) {
+    rateLimitEndpoint = '/api/contact'
+  }
+
+  // Check rate limit
+  const rateLimitResult = checkRateLimit(clientIP, rateLimitEndpoint)
+  const rateLimitHeaders = getRateLimitHeaders(clientIP, rateLimitEndpoint)
+  
+  if (!rateLimitResult.success) {
+    return new NextResponse(
+      JSON.stringify({ 
+        error: 'Too Many Requests',
+        message: 'Rate limit exceeded. Please try again later.',
+        resetTime: rateLimitResult.resetTime 
+      }), 
+      { 
+        status: 429,
+        headers: {
+          'Content-Type': 'application/json',
+          ...rateLimitHeaders,
+        }
+      }
+    )
+  }
   // Block access to sensitive files with 404
   const sensitiveFiles = [
     '.env',
@@ -90,14 +131,30 @@ export async function updateSession(request: NextRequest) {
 
   // Don't redirect static files, API routes, or files with extensions
   if (isStaticRoute || isFileRequest) {
+    // Add rate limit headers to response
+    Object.entries(rateLimitHeaders).forEach(([key, value]) => {
+      supabaseResponse.headers.set(key, value)
+    })
     return supabaseResponse
   }
 
   if (!user && !isPublicRoute) {
     const url = request.nextUrl.clone()
     url.pathname = '/login'
-    return NextResponse.redirect(url)
+    const response = NextResponse.redirect(url)
+    
+    // Add rate limit headers to redirect response
+    Object.entries(rateLimitHeaders).forEach(([key, value]) => {
+      response.headers.set(key, value)
+    })
+    
+    return response
   }
+
+  // Add rate limit headers to successful response
+  Object.entries(rateLimitHeaders).forEach(([key, value]) => {
+    supabaseResponse.headers.set(key, value)
+  })
 
   return supabaseResponse
 }
