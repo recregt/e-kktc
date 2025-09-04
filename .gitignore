@@ -52,3 +52,8 @@ Thumbs.db
 
 # logs
 *.log
+
+# temp files
+*-new.*
+*-old.*
+*-backup.*
