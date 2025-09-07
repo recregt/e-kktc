@@ -30,10 +30,10 @@ export default function AboutPage() {
 
   const team = [
     {
-      name: 'Ahmet Kaya',
+      name: 'Ömer Tekin',
       role: 'Kurucu & CEO',
       bio: 'Teknoloji ve e-ticaret alanında 15 yıllık deneyim.',
-      avatar: 'AK'
+      avatar: 'ÖT'
     },
     {
       name: 'Elif Demir',
@@ -68,7 +68,7 @@ export default function AboutPage() {
             </span>
           </h1>
           <p className="text-xl text-gray-600 max-w-3xl mx-auto mb-8">
-            2024 yılında kurulan e-KKTC, Kuzey Kıbrıs&apos;ın en güvenilir e-ticaret platformu 
+            2025 yılında kurulan e-KKTC, Kuzey Kıbrıs&apos;ın en güvenilir e-ticaret platformu 
             olarak yerel işletmeleri ve müşterileri buluşturuyor.
           </p>
           <Link href="/products">

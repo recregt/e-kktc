@@ -2,34 +2,68 @@
 
 import { Card, CardContent } from '@/components/ui/card'
 
-const testimonials = [
-  {
-    id: 1,
-    name: "Ayşe Demir",
-    location: "Girne",
-    comment: "Harika bir platform! Yerel işletmelerden güvenle alışveriş yapabiliyorum. Kapıda ödeme özelliği çok kullanışlı.",
-    rating: 5,
-    avatar: "AD"
-  },
-  {
-    id: 2,
-    name: "Mehmet Özkan",
-    location: "Lefkoşa",
-    comment: "Siparişim çok hızlı geldi. Ürün kalitesi mükemmeldi. Kesinlikle tavsiye ederim!",
-    rating: 5,
-    avatar: "MÖ"
-  },
-  {
-    id: 3,
-    name: "Zeynep Kaya",
-    location: "Mağusa",
-    comment: "Yerel işletmeleri desteklemek için harika bir fırsat. Uygulama çok kullanıcı dostu.",
-    rating: 5,
-    avatar: "ZK"
+// Helper function to generate random recent dates
+const getRandomRecentDate = (daysBack: number) => {
+  const now = new Date()
+  const randomDays = Math.floor(Math.random() * daysBack)
+  const date = new Date(now.getTime() - randomDays * 24 * 60 * 60 * 1000)
+  return date
+}
+
+// Helper function to format time ago
+const getTimeAgo = (date: Date) => {
+  const now = new Date()
+  const diffInMs = now.getTime() - date.getTime()
+  const diffInDays = Math.floor(diffInMs / (1000 * 60 * 60 * 24))
+  const diffInHours = Math.floor(diffInMs / (1000 * 60 * 60))
+  
+  if (diffInDays === 0) {
+    if (diffInHours === 0) return "Az önce"
+    return `${diffInHours} saat önce`
+  } else if (diffInDays === 1) {
+    return "Dün"
+  } else if (diffInDays < 7) {
+    return `${diffInDays} gün önce`
+  } else if (diffInDays < 30) {
+    const weeks = Math.floor(diffInDays / 7)
+    return `${weeks} hafta önce`
+  } else {
+    const months = Math.floor(diffInDays / 30)
+    return `${months} ay önce`
   }
-]
+}
 
 export default function TestimonialsSection() {
+  // Generate testimonials with dynamic dates
+  const testimonials = [
+    {
+      id: 1,
+      name: "Ayşe Demir",
+      location: "Girne",
+      comment: "Harika bir platform! Yerel işletmelerden güvenle alışveriş yapabiliyorum. Kapıda ödeme özelliği çok kullanışlı.",
+      rating: 5,
+      avatar: "AD",
+      date: getRandomRecentDate(7) // Son 7 gün içinde
+    },
+    {
+      id: 2,
+      name: "Mehmet Özkan",
+      location: "Lefkoşa",
+      comment: "Siparişim çok hızlı geldi. Ürün kalitesi mükemmeldi. Kesinlikle tavsiye ederim!",
+      rating: 5,
+      avatar: "MÖ",
+      date: getRandomRecentDate(14) // Son 14 gün içinde
+    },
+    {
+      id: 3,
+      name: "Zeynep Kaya",
+      location: "Mağusa",
+      comment: "Yerel işletmeleri desteklemek için harika bir fırsat. Uygulama çok kullanıcı dostu.",
+      rating: 5,
+      avatar: "ZK",
+      date: getRandomRecentDate(30) // Son 30 gün içinde
+    }
+  ]
   return (
     <section className="py-20 bg-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -68,17 +102,24 @@ export default function TestimonialsSection() {
                 </p>
 
                 {/* User Info */}
-                <div className="flex items-center">
-                  <div className="w-12 h-12 rounded-full bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center text-white font-semibold mr-4">
-                    {testimonial.avatar}
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center">
+                    <div className="w-12 h-12 rounded-full bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center text-white font-semibold mr-4">
+                      {testimonial.avatar}
+                    </div>
+                    <div>
+                      <div className="font-semibold text-gray-900">
+                        {testimonial.name}
+                      </div>
+                      <div className="text-sm text-gray-500">
+                        {testimonial.location}
+                      </div>
+                    </div>
                   </div>
-                  <div>
-                    <div className="font-semibold text-gray-900">
-                      {testimonial.name}
-                    </div>
-                    <div className="text-sm text-gray-500">
-                      {testimonial.location}
-                    </div>
+                  
+                  {/* Time ago */}
+                  <div className="text-xs text-gray-400 bg-gray-50 px-2 py-1 rounded-full">
+                    {getTimeAgo(testimonial.date)}
                   </div>
                 </div>
               </CardContent>
