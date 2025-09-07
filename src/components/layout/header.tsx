@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useCallback } from 'react'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { createClientComponentClient } from '@supabase/auth-helpers-nextjs'
@@ -16,10 +16,6 @@ interface UserProfile {
   avatar_url?: string
 }
 
-interface UserLike {
-  email?: string
-}
-
 export default function Header() {
   const router = useRouter()
   const supabase = createClientComponentClient()
@@ -30,7 +26,7 @@ export default function Header() {
   const [loading, setLoading] = useState(true)
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
 
-  const fetchProfile = async (userId: string) => {
+  const fetchProfile = useCallback(async (userId: string) => {
     try {
       const { data } = await supabase
         .from('profiles')
@@ -43,9 +39,9 @@ export default function Header() {
       console.log('Profile fetch error:', error)
       setProfile(null)
     }
-  }
+  }, [supabase])
 
-  const checkUser = async () => {
+  const checkUser = useCallback(async () => {
     const { data: { user } } = await supabase.auth.getUser()
     setUser(user)
     setLoading(false)
@@ -53,7 +49,7 @@ export default function Header() {
     if (user) {
       await fetchProfile(user.id)
     }
-  }
+  }, [supabase.auth, fetchProfile])
 
   useEffect(() => {
     checkUser()
