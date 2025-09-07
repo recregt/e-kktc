@@ -5,6 +5,7 @@ import { createClient } from '@/lib/supabase/client'
 import { useCart } from '@/contexts/cart-context'
 import { Button } from '@/components/ui/button'
 import Logo from '@/components/ui/logo'
+import MobileMenu from '@/components/layout/mobile-menu'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import type { User } from '@supabase/auth-js'
@@ -13,6 +14,7 @@ export default function Header() {
   const [user, setUser] = useState<User | null>(null)
   const [profile, setProfile] = useState<{ full_name?: string; avatar_url?: string } | null>(null)
   const [loading, setLoading] = useState(true)
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
   const { state } = useCart()
   const router = useRouter()
   const supabase = createClient()
@@ -178,7 +180,10 @@ export default function Header() {
             )}
 
             {/* Mobile menu button */}
-            <button className="md:hidden p-2 text-gray-400 hover:text-gray-600 transition-colors">
+            <button 
+              className="md:hidden p-2 text-gray-400 hover:text-gray-600 transition-colors"
+              onClick={() => setMobileMenuOpen(true)}
+            >
               <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
               </svg>
@@ -186,6 +191,14 @@ export default function Header() {
           </div>
         </div>
       </div>
+
+      {/* Mobile Menu */}
+      <MobileMenu 
+        isOpen={mobileMenuOpen}
+        onClose={() => setMobileMenuOpen(false)}
+        user={user}
+        onSignOut={handleSignOut}
+      />
     </header>
   )
 }
