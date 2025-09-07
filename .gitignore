@@ -41,7 +41,6 @@ yarn-error.log*
 next-env.d.ts
 
 # IDE
-.vscode/
 .idea/
 *.swp
 *.swo
@@ -71,3 +70,20 @@ test-*
 supabase-schema.sql
 supabase-addresses-setup.sql
 supabase-storage-setup.sql
+
+# VS Code session and workspace files
+.vscode/launch.json
+.vscode/tasks.json
+.vscode/*.code-workspace
+.vscode/settings.json.backup
+.vscode/extensions.json
+*.code-workspace
+.history/
+
+# Prevent auto-recovery of deleted files
+**/mobile-menu-backup.*
+**/mobile-menu-new.*
+**/logo-new.*
+**/*-backup.*
+**/*-old.*
+**/*-temp.*

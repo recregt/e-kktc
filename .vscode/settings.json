@@ -1,0 +1,79 @@
+{
+  "typescript.preferences.includePackageJsonAutoImports": "off",
+  "typescript.suggest.autoImports": false,
+  "typescript.validate.enable": true,
+  "typescript.format.enable": true,
+  "eslint.validate": ["typescript", "typescriptreact"],
+  "typescript.preferences.noSemantic": false,
+  "typescript.disableAutomaticTypeAcquisition": false,
+  
+  // STRICT: Disable ALL auto-recovery and file restoration
+  "files.restoreUndoStack": false,
+  "files.hotExit": "off",
+  "workbench.editor.restoreViewState": false,
+  "workbench.editor.enablePreview": false,
+  "workbench.editor.enablePreviewFromQuickOpen": false,
+  "workbench.editor.enablePreviewFromCodeNavigation": false,
+  "workbench.editor.closeOnFileDelete": true,
+  "files.autoSave": "off",
+  "workbench.editor.autoSave": "off",
+  
+  // STRICT: Git auto-behavior disabled
+  "git.autofetch": false,
+  "git.autorefresh": false,
+  "git.autoStash": false,
+  "git.confirmSync": true,
+  "git.postCommitCommand": "none",
+  "git.showProgress": false,
+  "git.timeline.showAuthor": false,
+  "git.openRepositoryInParentFolders": "never",
+  "git.autoRepositoryDetection": false,
+  
+  // STRICT: Disable workspace restoration
+  "window.restoreWindows": "none",
+  "window.restoreFullscreen": false,
+  "workbench.startup.editor": "none",
+  "workbench.editor.centeredLayoutAutoResize": false,
+  
+  // STRICT: Extension auto-behavior disabled
+  "extensions.autoUpdate": false,
+  "extensions.autoCheckUpdates": false,
+  "extensions.ignoreRecommendations": true,
+  "files.watcherExclude": {
+    "**/.git/**": true,
+    "**/node_modules/**": true,
+    "**/.next/**": true,
+    "**/dist/**": true,
+    "**/.cache/**": true,
+    "**/supabase-test/**": true,
+    "**/fix-*.sql": true,
+    "**/supabase-verification-queries.sql": true,
+    "**/*-debug.*": true,
+    "**/*-test.*": true,
+    "**/supabase-schema.sql": true,
+    "**/supabase-addresses-setup.sql": true,
+    "**/supabase-storage-setup.sql": true
+  },
+  "search.exclude": {
+    "**/node_modules": true,
+    "**/.next": true,
+    "**/dist": true,
+    "**/.cache": true,
+    "**/supabase-test": true,
+    "**/fix-*.sql": true,
+    "**/supabase-verification-queries.sql": true,
+    "**/*-debug.*": true,
+    "**/*-test.*": true,
+    "**/supabase-schema.sql": true,
+    "**/supabase-addresses-setup.sql": true,
+    "**/supabase-storage-setup.sql": true
+  },
+  "files.exclude": {
+    "**/supabase-test": true,
+    "**/fix-*.sql": true,
+    "**/supabase-verification-queries.sql": true,
+    "**/supabase-schema.sql": true,
+    "**/supabase-addresses-setup.sql": true,
+    "**/supabase-storage-setup.sql": true
+  }
+}
