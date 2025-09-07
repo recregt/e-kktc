@@ -1,14 +1,7 @@
 'use client'
 
+import { useState, useEffect } from 'react'
 import { Card, CardContent } from '@/components/ui/card'
-
-// Helper function to generate random recent dates
-const getRandomRecentDate = (daysBack: number) => {
-  const now = new Date()
-  const randomDays = Math.floor(Math.random() * daysBack)
-  const date = new Date(now.getTime() - randomDays * 24 * 60 * 60 * 1000)
-  return date
-}
 
 // Helper function to format time ago
 const getTimeAgo = (date: Date) => {
@@ -34,7 +27,13 @@ const getTimeAgo = (date: Date) => {
 }
 
 export default function TestimonialsSection() {
-  // Generate testimonials with dynamic dates
+  const [isClient, setIsClient] = useState(false)
+
+  useEffect(() => {
+    setIsClient(true)
+  }, [])
+
+  // Fixed testimonials with static dates to avoid hydration issues
   const testimonials = [
     {
       id: 1,
@@ -43,7 +42,8 @@ export default function TestimonialsSection() {
       comment: "Harika bir platform! Yerel işletmelerden güvenle alışveriş yapabiliyorum. Kapıda ödeme özelliği çok kullanışlı.",
       rating: 5,
       avatar: "AD",
-      date: getRandomRecentDate(7) // Son 7 gün içinde
+      date: new Date(Date.now() - 2 * 24 * 60 * 60 * 1000), // 2 gün önce
+      timeAgo: "2 gün önce"
     },
     {
       id: 2,
@@ -52,7 +52,8 @@ export default function TestimonialsSection() {
       comment: "Siparişim çok hızlı geldi. Ürün kalitesi mükemmeldi. Kesinlikle tavsiye ederim!",
       rating: 5,
       avatar: "MÖ",
-      date: getRandomRecentDate(14) // Son 14 gün içinde
+      date: new Date(Date.now() - 5 * 24 * 60 * 60 * 1000), // 5 gün önce
+      timeAgo: "5 gün önce"
     },
     {
       id: 3,
@@ -61,7 +62,8 @@ export default function TestimonialsSection() {
       comment: "Yerel işletmeleri desteklemek için harika bir fırsat. Uygulama çok kullanıcı dostu.",
       rating: 5,
       avatar: "ZK",
-      date: getRandomRecentDate(30) // Son 30 gün içinde
+      date: new Date(Date.now() - 7 * 24 * 60 * 60 * 1000), // 1 hafta önce
+      timeAgo: "1 hafta önce"
     }
   ]
   return (
@@ -119,7 +121,7 @@ export default function TestimonialsSection() {
                   
                   {/* Time ago */}
                   <div className="text-[10px] sm:text-xs text-gray-400 bg-gray-50 px-1.5 sm:px-2 py-1 rounded-full whitespace-nowrap">
-                    {getTimeAgo(testimonial.date)}
+                    {isClient ? getTimeAgo(testimonial.date) : testimonial.timeAgo}
                   </div>
                 </div>
               </CardContent>
