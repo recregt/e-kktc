@@ -1,6 +1,7 @@
 'use client'
 
 import { useEffect, useState, useCallback } from 'react'
+import Image from 'next/image'
 import { createClient } from '@/lib/supabase/client'
 import { useCart } from '@/contexts/cart-context'
 import { Button } from '@/components/ui/button'
@@ -93,10 +94,12 @@ export default function ProductsPage() {
               <Card key={product.id} className="overflow-hidden hover:shadow-lg transition-shadow">
                 <div className="aspect-square bg-gray-200 relative">
                   {product.images && product.images[0] ? (
-                    <img
+                    <Image
                       src={product.images[0]}
                       alt={product.name}
-                      className="w-full h-full object-cover"
+                      fill
+                      className="object-cover"
+                      sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 25vw"
                     />
                   ) : (
                     <div className="w-full h-full flex items-center justify-center text-gray-400">

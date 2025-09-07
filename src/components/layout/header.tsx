@@ -2,12 +2,13 @@
 
 import { useState, useEffect, useCallback } from 'react'
 import Link from 'next/link'
+import Image from 'next/image'
 import { useRouter } from 'next/navigation'
 import { createClientComponentClient } from '@supabase/auth-helpers-nextjs'
 import { Button } from '@/components/ui/button'
 import { useCart } from '@/contexts/cart-context'
 import Logo from '@/components/ui/logo'
-import MobileMenu from './mobile-menu'
+import MobileMenu from './mobile-menu-simple'
 import type { User } from '@supabase/auth-helpers-nextjs'
 
 interface UserProfile {
@@ -74,7 +75,7 @@ export default function Header() {
   }
 
   return (
-    <header className="bg-white/95 backdrop-blur-sm shadow-sm border-b border-gray-100 sticky top-0 z-50">
+    <header className="bg-white/95 backdrop-blur-sm shadow-sm border-b border-gray-100 sticky top-0 z-30">
       {/* Mobile Header */}
       <div className="md:hidden">
         <div className="max-w-7xl mx-auto px-4">
@@ -98,9 +99,9 @@ export default function Header() {
       {/* Desktop Header */}
       <div className="hidden md:block">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center h-14">
+          <div className="flex justify-between items-center h-16">
             {/* Logo */}
-            <Logo size="sm" />
+            <Logo size="md" />
             
             {/* Navigation */}
             <nav className="flex items-center space-x-8">
@@ -125,16 +126,16 @@ export default function Header() {
             </nav>
             
             {/* Right side actions */}
-            <div className="flex items-center space-x-4">
+            <div className="flex items-center space-x-3">
               {/* Search Icon */}
-              <button className="p-2 text-gray-400 hover:text-gray-600 transition-colors">
+              <button className="p-2 text-gray-400 hover:text-gray-600 hover:bg-gray-100 rounded-lg transition-all">
                 <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
                 </svg>
               </button>
 
               {/* Cart */}
-              <Link href="/cart" className="relative p-2 text-gray-400 hover:text-gray-600 transition-colors">
+              <Link href="/cart" className="relative p-2 text-gray-400 hover:text-gray-600 hover:bg-gray-100 rounded-lg transition-all">
                 <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 3h2l.4 2M7 13h10l4-8H5.4m0 0L7 13m0 0l-2.5 2.5M7 13l2.5 2.5m-2.5-2.5v6.5a1 1 0 001 1h10a1 1 0 001-1V13M7 13h10" />
                 </svg>
@@ -145,49 +146,48 @@ export default function Header() {
                 )}
               </Link>
 
+              {/* User Section */}
               {loading ? (
-                <div className="w-8 h-8 animate-pulse bg-gray-200 rounded-full"></div>
+                <div className="flex items-center space-x-2">
+                  <div className="w-8 h-8 animate-pulse bg-gray-200 rounded-full"></div>
+                  <div className="w-16 h-4 animate-pulse bg-gray-200 rounded"></div>
+                </div>
               ) : user ? (
-                <div className="flex items-center space-x-3">
-                  {/* User Profile Dropdown */}
-                  <div className="relative group">
-                    <Link 
-                      href="/profile" 
-                      className="flex items-center space-x-2 hover:bg-gray-50 rounded-lg p-2 transition-colors"
-                    >
-                      {/* Avatar */}
-                      <div className="w-8 h-8 rounded-full overflow-hidden bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center">
-                        {profile?.avatar_url ? (
-                          <img 
-                            src={supabase.storage.from('avatars').getPublicUrl(profile.avatar_url).data.publicUrl}
-                            alt="Avatar" 
-                            className="w-full h-full object-cover"
-                          />
-                        ) : (
-                          <span className="text-white text-sm font-medium">
-                            {user.email?.[0].toUpperCase()}
-                          </span>
-                        )}
-                      </div>
-                      
-                      {/* User Name */}
-                      <span className="text-sm font-medium text-gray-700">
-                        {profile?.full_name || user.email?.split('@')[0] || 'Kullanıcı'}
-                      </span>
-                      
-                      {/* Dropdown arrow */}
-                      <svg className="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-                      </svg>
-                    </Link>
+                <div className="flex items-center space-x-2">
+                  {/* User Profile */}
+                  <Link 
+                    href="/profile" 
+                    className="flex items-center space-x-2 hover:bg-gray-50 rounded-lg p-2 transition-colors"
+                  >
+                    {/* Avatar */}
+                    <div className="w-8 h-8 rounded-full overflow-hidden bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center">
+                      {profile?.avatar_url ? (
+                        <Image 
+                          src={supabase.storage.from('avatars').getPublicUrl(profile.avatar_url).data.publicUrl}
+                          alt="Avatar" 
+                          width={32}
+                          height={32}
+                          className="w-full h-full object-cover"
+                        />
+                      ) : (
+                        <span className="text-white text-sm font-medium">
+                          {user.email?.[0].toUpperCase()}
+                        </span>
+                      )}
+                    </div>
                     
-                    {/* Dropdown Menu - Will be implemented later */}
-                  </div>
+                    {/* User Name */}
+                    <span className="text-sm font-medium text-gray-700 hidden lg:block">
+                      {profile?.full_name || user.email?.split('@')[0] || 'Kullanıcı'}
+                    </span>
+                  </Link>
                   
+                  {/* Sign Out Button */}
                   <Button 
                     variant="outline" 
                     size="sm" 
                     onClick={handleSignOut}
+                    className="text-gray-600 border-gray-300 hover:text-red-600 hover:border-red-300"
                   >
                     Çıkış
                   </Button>
@@ -195,10 +195,14 @@ export default function Header() {
               ) : (
                 <div className="flex items-center space-x-2">
                   <Link href="/login">
-                    <Button variant="ghost" size="sm">Giriş</Button>
+                    <Button variant="ghost" size="sm" className="text-gray-600">
+                      Giriş
+                    </Button>
                   </Link>
                   <Link href="/signup">
-                    <Button size="sm">Kayıt Ol</Button>
+                    <Button size="sm" className="bg-blue-600 hover:bg-blue-700">
+                      Kayıt Ol
+                    </Button>
                   </Link>
                 </div>
               )}

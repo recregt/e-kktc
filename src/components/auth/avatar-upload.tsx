@@ -1,6 +1,7 @@
 'use client'
 
 import { useState, useRef } from 'react'
+import Image from 'next/image'
 import { createClient } from '@/lib/supabase/client'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
@@ -179,15 +180,19 @@ export default function AvatarUpload({ user, currentAvatarUrl, onAvatarUpdate }:
         <div className="relative">
           <div className="w-24 h-24 rounded-full overflow-hidden bg-gray-200 flex items-center justify-center">
             {previewUrl ? (
-              <img 
+              <Image 
                 src={previewUrl} 
                 alt="Preview" 
+                width={96}
+                height={96}
                 className="w-full h-full object-cover"
               />
             ) : currentAvatar ? (
-              <img 
+              <Image 
                 src={currentAvatar} 
                 alt="Avatar" 
+                width={96}
+                height={96}
                 className="w-full h-full object-cover"
               />
             ) : (
