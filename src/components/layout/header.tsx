@@ -4,6 +4,7 @@ import { useState, useEffect, useCallback } from 'react'
 import { createClient } from '@/lib/supabase/client'
 import { useCart } from '@/contexts/cart-context'
 import { Button } from '@/components/ui/button'
+import Logo from '@/components/ui/logo'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import type { User } from '@supabase/auth-js'
@@ -68,67 +69,120 @@ export default function Header() {
   }
 
   return (
-    <header className="bg-white shadow-sm">
+    <header className="bg-white/95 backdrop-blur-sm shadow-sm border-b border-gray-100 sticky top-0 z-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
-          <Link href="/" className="text-2xl font-bold text-gray-900">
-            Kıbrıs E-ticaret
-          </Link>
+          {/* Logo */}
+          <Logo size="md" />
           
-          <div className="flex items-center space-x-4">
-            <Link href="/products">
-              <Button variant="ghost">Ürünler</Button>
+          {/* Navigation */}
+          <nav className="hidden md:flex items-center space-x-8">
+            <Link 
+              href="/products" 
+              className="text-gray-700 hover:text-blue-600 font-medium transition-colors duration-200"
+            >
+              Ürünler
             </Link>
-            
-            <Link href="/cart" className="relative">
-              <Button variant="ghost">
-                Sepet
-                {state.totalItems > 0 && (
-                  <span className="absolute -top-2 -right-2 bg-blue-600 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">
-                    {state.totalItems}
-                  </span>
-                )}
-              </Button>
+            <Link 
+              href="/categories" 
+              className="text-gray-700 hover:text-blue-600 font-medium transition-colors duration-200"
+            >
+              Kategoriler
+            </Link>
+            <Link 
+              href="/about" 
+              className="text-gray-700 hover:text-blue-600 font-medium transition-colors duration-200"
+            >
+              Hakkımızda
+            </Link>
+          </nav>
+          
+          {/* Right side actions */}
+          <div className="flex items-center space-x-4">
+            {/* Search Icon (for future implementation) */}
+            <button className="p-2 text-gray-400 hover:text-gray-600 transition-colors">
+              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+              </svg>
+            </button>
+
+            {/* Cart */}
+            <Link href="/cart" className="relative p-2 text-gray-400 hover:text-gray-600 transition-colors">
+              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 3h2l.4 2M7 13h10l4-8H5.4m0 0L7 13m0 0l-2.5 2.5M7 13l2.5 2.5m-2.5-2.5v6.5a1 1 0 001 1h10a1 1 0 001-1V13M7 13h10" />
+              </svg>
+              {state.totalItems > 0 && (
+                <span className="absolute -top-1 -right-1 bg-blue-600 text-white text-xs font-bold rounded-full h-5 w-5 flex items-center justify-center">
+                  {state.totalItems}
+                </span>
+              )}
             </Link>
 
             {loading ? (
-              <div className="w-8 h-8 animate-pulse bg-gray-200 rounded"></div>
+              <div className="w-8 h-8 animate-pulse bg-gray-200 rounded-full"></div>
             ) : user ? (
               <div className="flex items-center space-x-3">
-                <Link href="/profile" className="flex items-center space-x-2 hover:bg-gray-50 rounded-lg p-2 transition-colors">
-                  {/* Avatar */}
-                  <div className="w-8 h-8 rounded-full overflow-hidden bg-gray-200 flex items-center justify-center">
-                    {profile?.avatar_url ? (
-                      <img 
-                        src={supabase.storage.from('avatars').getPublicUrl(profile.avatar_url).data.publicUrl}
-                        alt="Avatar" 
-                        className="w-full h-full object-cover"
-                      />
-                    ) : (
-                      <span className="text-gray-400 text-sm">👤</span>
-                    )}
-                  </div>
+                {/* User Profile Dropdown */}
+                <div className="relative group">
+                  <Link 
+                    href="/profile" 
+                    className="flex items-center space-x-2 hover:bg-gray-50 rounded-lg p-2 transition-colors"
+                  >
+                    {/* Avatar */}
+                    <div className="w-8 h-8 rounded-full overflow-hidden bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center">
+                      {profile?.avatar_url ? (
+                        <img 
+                          src={supabase.storage.from('avatars').getPublicUrl(profile.avatar_url).data.publicUrl}
+                          alt="Avatar" 
+                          className="w-full h-full object-cover"
+                        />
+                      ) : (
+                        <span className="text-white text-sm font-medium">
+                          {(profile?.full_name || user.email)?.charAt(0).toUpperCase()}
+                        </span>
+                      )}
+                    </div>
+                    
+                    {/* User Name - Hidden on mobile */}
+                    <span className="hidden sm:block text-sm font-medium text-gray-700">
+                      {profile?.full_name || user.email?.split('@')[0] || 'Kullanıcı'}
+                    </span>
+                    
+                    {/* Dropdown arrow */}
+                    <svg className="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                    </svg>
+                  </Link>
                   
-                  {/* User Name */}
-                  <span className="text-sm font-medium text-gray-700">
-                    {profile?.full_name || user.email?.split('@')[0] || 'Kullanıcı'}
-                  </span>
-                </Link>
+                  {/* Dropdown Menu - Will be implemented later */}
+                </div>
                 
-                <Button variant="outline" size="sm" onClick={handleSignOut}>
+                <Button 
+                  variant="outline" 
+                  size="sm" 
+                  onClick={handleSignOut}
+                  className="hidden sm:flex"
+                >
                   Çıkış
                 </Button>
               </div>
             ) : (
               <div className="flex items-center space-x-2">
                 <Link href="/login">
-                  <Button variant="ghost">Giriş Yap</Button>
+                  <Button variant="ghost" size="sm">Giriş</Button>
                 </Link>
                 <Link href="/signup">
-                  <Button>Kayıt Ol</Button>
+                  <Button size="sm">Kayıt Ol</Button>
                 </Link>
               </div>
             )}
+
+            {/* Mobile menu button */}
+            <button className="md:hidden p-2 text-gray-400 hover:text-gray-600 transition-colors">
+              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+              </svg>
+            </button>
           </div>
         </div>
       </div>

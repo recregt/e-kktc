@@ -26,24 +26,28 @@ export default function CartPage() {
 
   if (state.items.length === 0) {
     return (
-      <div className="min-h-screen bg-gray-50">
-        {/* Empty Cart */}
-        <main className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
-          <div className="text-center">
-            <div className="text-6xl mb-4">🛒</div>
+      <div className="min-h-screen bg-gray-50 py-8">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+          {/* Empty Cart */}
+          <div className="text-center py-16">
+            <div className="w-24 h-24 mx-auto mb-6 bg-gray-100 rounded-full flex items-center justify-center">
+              <svg className="w-12 h-12 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 3h2l.4 2M7 13h10l4-8H5.4m0 0L7 13m0 0l-2.5 2.5M7 13l2.5 2.5m-2.5-2.5v6.5a1 1 0 001 1h10a1 1 0 001-1V13M7 13h10" />
+              </svg>
+            </div>
             <h1 className="text-3xl font-bold text-gray-900 mb-4">
               Sepetiniz Boş
             </h1>
-            <p className="text-gray-500 mb-8">
-              Alışverişe başlamak için ürünler sayfasını ziyaret edin
+            <p className="text-gray-600 mb-8 max-w-md mx-auto">
+              Henüz sepetinizde ürün bulunmuyor. Harika ürünlerimizi keşfetmek için alışverişe başlayın!
             </p>
             <Link href="/products">
-              <Button size="lg">
-                Ürünleri Görüntüle
+              <Button size="lg" className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700">
+                🛍️ Alışverişe Başla
               </Button>
             </Link>
           </div>
-        </main>
+        </div>
       </div>
     )
   }
