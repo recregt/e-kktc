@@ -98,7 +98,7 @@ export default function TestimonialsSection() {
 
                 {/* Comment */}
                 <p className="text-gray-600 mb-6 italic">
-                  "{testimonial.comment}"
+                  &quot;{testimonial.comment}&quot;
                 </p>
 
                 {/* User Info */}

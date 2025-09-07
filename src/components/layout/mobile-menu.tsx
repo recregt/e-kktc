@@ -4,11 +4,16 @@ import { useState } from 'react'
 import Link from 'next/link'
 import { Button } from '@/components/ui/button'
 
+
+interface UserLike {
+  email?: string | null;
+}
+
 interface MobileMenuProps {
-  isOpen: boolean
-  onClose: () => void
-  user: any
-  onSignOut: () => void
+  isOpen: boolean;
+  onClose: () => void;
+  user: UserLike | null;
+  onSignOut: () => void;
 }
 
 export default function MobileMenu({ isOpen, onClose, user, onSignOut }: MobileMenuProps) {
