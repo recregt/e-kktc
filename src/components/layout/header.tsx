@@ -74,13 +74,13 @@ export default function Header() {
   }
 
   return (
-    <header className="bg-white/95 backdrop-blur-sm shadow-sm border-b border-gray-100 sticky top-0 z-40">
+    <header className="bg-white/95 backdrop-blur-sm shadow-sm border-b border-gray-100 sticky top-0 z-50">
       {/* Mobile Header */}
       <div className="md:hidden">
         <div className="max-w-7xl mx-auto px-4">
-          <div className="flex justify-between items-center h-16">
+          <div className="flex justify-between items-center h-14">
             {/* Logo */}
-            <Logo size="md" />
+            <Logo size="sm" />
             
             {/* Mobile menu button */}
             <button 
@@ -98,9 +98,9 @@ export default function Header() {
       {/* Desktop Header */}
       <div className="hidden md:block">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center h-16">
+          <div className="flex justify-between items-center h-14">
             {/* Logo */}
-            <Logo size="md" />
+            <Logo size="sm" />
             
             {/* Navigation */}
             <nav className="flex items-center space-x-8">
