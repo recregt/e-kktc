@@ -14,16 +14,17 @@ export default function HomePage() {
         <div className="absolute inset-0 bg-grid-gray-100 bg-[size:20px_20px] opacity-30"></div>
         
         {/* Hero Content */}
-        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 lg:py-32">
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16 lg:py-32">
           <div className="text-center">
             {/* Badge */}
-            <div className="inline-flex items-center px-3 py-1 rounded-full text-sm bg-blue-100 text-blue-800 mb-6">
+            <div className="inline-flex items-center px-3 py-1 rounded-full text-xs sm:text-sm bg-blue-100 text-blue-800 mb-4 sm:mb-6">
               <span className="w-2 h-2 bg-blue-600 rounded-full mr-2"></span>
-              Kuzey Kıbrıs&apos;ın #1 E-ticaret Platformu
+              <span className="hidden sm:inline">Kuzey Kıbrıs&apos;ın #1 E-ticaret Platformu</span>
+              <span className="sm:hidden">KKTC #1 E-ticaret</span>
             </div>
 
             {/* Main Heading */}
-            <h1 className="text-4xl font-bold text-gray-900 sm:text-5xl md:text-6xl lg:text-7xl">
+            <h1 className="text-3xl font-bold text-gray-900 sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl leading-tight">
               <span className="block">Güvenli</span>
               <span className="block text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-purple-600">
                 Alışveriş
@@ -32,38 +33,38 @@ export default function HomePage() {
             </h1>
 
             {/* Subtitle */}
-            <p className="mt-6 max-w-2xl mx-auto text-lg text-gray-600 sm:text-xl">
+            <p className="mt-4 sm:mt-6 max-w-2xl mx-auto text-base sm:text-lg lg:text-xl text-gray-600">
               Yerel işletmelerin ve müşterilerin buluşma noktası. 
               Kapıda ödeme ile güvenli, hızlı ve kolay alışveriş deneyimi.
             </p>
 
             {/* CTA Buttons */}
-            <div className="mt-8 flex flex-col sm:flex-row gap-4 justify-center">
-              <Link href="/products">
-                <Button size="lg" className="w-full sm:w-auto bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white px-8 py-3 text-lg font-semibold shadow-lg hover:shadow-xl transition-all duration-300">
+            <div className="mt-6 sm:mt-8 flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center px-4">
+              <Link href="/products" className="w-full sm:w-auto">
+                <Button size="lg" className="w-full sm:w-auto bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white px-6 sm:px-8 py-3 text-base sm:text-lg font-semibold shadow-lg hover:shadow-xl transition-all duration-300">
                   🛍️ Alışverişe Başla
                 </Button>
               </Link>
-              <Link href="/signup">
-                <Button variant="outline" size="lg" className="w-full sm:w-auto border-2 border-gray-300 hover:border-gray-400 px-8 py-3 text-lg font-semibold">
+              <Link href="/signup" className="w-full sm:w-auto">
+                <Button variant="outline" size="lg" className="w-full sm:w-auto border-2 border-gray-300 hover:border-gray-400 px-6 sm:px-8 py-3 text-base sm:text-lg font-semibold">
                   🏪 Satıcı Ol
                 </Button>
               </Link>
             </div>
 
             {/* Stats */}
-            <div className="mt-16 grid grid-cols-3 gap-8 text-center">
+            <div className="mt-12 sm:mt-16 grid grid-cols-3 gap-4 sm:gap-8 text-center">
               <div>
-                <div className="text-2xl font-bold text-gray-900">500+</div>
-                <div className="text-sm text-gray-600">Yerel İşletme</div>
+                <div className="text-xl sm:text-2xl font-bold text-gray-900">500+</div>
+                <div className="text-xs sm:text-sm text-gray-600">Yerel İşletme</div>
               </div>
               <div>
-                <div className="text-2xl font-bold text-gray-900">10K+</div>
-                <div className="text-sm text-gray-600">Mutlu Müşteri</div>
+                <div className="text-xl sm:text-2xl font-bold text-gray-900">10K+</div>
+                <div className="text-xs sm:text-sm text-gray-600">Mutlu Müşteri</div>
               </div>
               <div>
-                <div className="text-2xl font-bold text-gray-900">24/7</div>
-                <div className="text-sm text-gray-600">Destek</div>
+                <div className="text-xl sm:text-2xl font-bold text-gray-900">24/7</div>
+                <div className="text-xs sm:text-sm text-gray-600">Destek</div>
               </div>
             </div>
           </div>

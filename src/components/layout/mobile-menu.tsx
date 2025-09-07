@@ -28,14 +28,14 @@ export default function MobileMenu({ isOpen, onClose, user, onSignOut }: MobileM
       />
       
       {/* Mobile Menu */}
-      <div className="fixed top-0 right-0 w-80 h-full bg-white shadow-xl z-50 md:hidden transform transition-transform duration-300">
+      <div className="fixed top-0 right-0 w-full max-w-sm h-full bg-white shadow-xl z-50 md:hidden transform transition-transform duration-300">
         <div className="flex flex-col h-full">
           {/* Header */}
-          <div className="flex items-center justify-between p-4 border-b">
-            <h2 className="text-lg font-semibold">Menü</h2>
+          <div className="flex items-center justify-between p-4 border-b bg-white">
+            <h2 className="text-lg font-semibold text-gray-900">Menü</h2>
             <button 
               onClick={onClose}
-              className="p-2 text-gray-400 hover:text-gray-600 transition-colors"
+              className="p-2 text-gray-400 hover:text-gray-600 transition-colors rounded-lg hover:bg-gray-100"
             >
               <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />

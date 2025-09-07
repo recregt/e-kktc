@@ -68,26 +68,26 @@ export default function TestimonialsSection() {
     <section className="py-20 bg-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
-        <div className="text-center mb-16">
-          <h2 className="text-3xl font-bold text-gray-900 sm:text-4xl mb-4">
+        <div className="text-center mb-12 sm:mb-16">
+          <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-gray-900 mb-3 sm:mb-4">
             Müşterilerimiz Ne Diyor?
           </h2>
-          <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+          <p className="text-base sm:text-lg text-gray-600 max-w-2xl mx-auto px-4">
             Binlerce mutlu müşterimizin deneyimlerini okuyun
           </p>
         </div>
 
         {/* Testimonials Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
           {testimonials.map((testimonial) => (
             <Card key={testimonial.id} className="border-0 shadow-lg hover:shadow-xl transition-shadow duration-300">
-              <CardContent className="p-6">
+              <CardContent className="p-4 sm:p-6">
                 {/* Stars */}
-                <div className="flex mb-4">
+                <div className="flex mb-3 sm:mb-4">
                   {[...Array(testimonial.rating)].map((_, i) => (
                     <svg
                       key={i}
-                      className="w-5 h-5 text-yellow-400"
+                      className="w-4 h-4 sm:w-5 sm:h-5 text-yellow-400"
                       fill="currentColor"
                       viewBox="0 0 20 20"
                     >
@@ -97,28 +97,28 @@ export default function TestimonialsSection() {
                 </div>
 
                 {/* Comment */}
-                <p className="text-gray-600 mb-6 italic">
+                <p className="text-gray-600 mb-4 sm:mb-6 italic text-sm sm:text-base">
                   &quot;{testimonial.comment}&quot;
                 </p>
 
                 {/* User Info */}
                 <div className="flex items-center justify-between">
                   <div className="flex items-center">
-                    <div className="w-12 h-12 rounded-full bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center text-white font-semibold mr-4">
+                    <div className="w-8 h-8 sm:w-10 sm:h-10 lg:w-12 lg:h-12 rounded-full bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center text-white font-semibold mr-3 sm:mr-4 text-xs sm:text-sm lg:text-base">
                       {testimonial.avatar}
                     </div>
-                    <div>
-                      <div className="font-semibold text-gray-900">
+                    <div className="flex-1 min-w-0">
+                      <div className="font-semibold text-gray-900 text-sm sm:text-base">
                         {testimonial.name}
                       </div>
-                      <div className="text-sm text-gray-500">
+                      <div className="text-xs sm:text-sm text-gray-500">
                         {testimonial.location}
                       </div>
                     </div>
                   </div>
                   
                   {/* Time ago */}
-                  <div className="text-xs text-gray-400 bg-gray-50 px-2 py-1 rounded-full">
+                  <div className="text-[10px] sm:text-xs text-gray-400 bg-gray-50 px-1.5 sm:px-2 py-1 rounded-full whitespace-nowrap">
                     {getTimeAgo(testimonial.date)}
                   </div>
                 </div>
@@ -128,25 +128,25 @@ export default function TestimonialsSection() {
         </div>
 
         {/* Call to Action */}
-        <div className="text-center mt-12">
-          <p className="text-gray-600 mb-4">
+        <div className="text-center mt-8 sm:mt-12">
+          <p className="text-gray-600 mb-3 sm:mb-4 text-sm sm:text-base">
             Siz de mutlu müşterilerimize katılın!
           </p>
-          <div className="flex justify-center space-x-4">
-            <div className="flex items-center text-sm text-gray-500">
-              <svg className="w-5 h-5 text-green-500 mr-2" fill="currentColor" viewBox="0 0 20 20">
+          <div className="flex flex-wrap justify-center gap-3 sm:gap-4 text-xs sm:text-sm">
+            <div className="flex items-center text-gray-500">
+              <svg className="w-4 h-4 sm:w-5 sm:h-5 text-green-500 mr-1 sm:mr-2" fill="currentColor" viewBox="0 0 20 20">
                 <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
               </svg>
               Ücretsiz Kargo
             </div>
-            <div className="flex items-center text-sm text-gray-500">
-              <svg className="w-5 h-5 text-green-500 mr-2" fill="currentColor" viewBox="0 0 20 20">
+            <div className="flex items-center text-gray-500">
+              <svg className="w-4 h-4 sm:w-5 sm:h-5 text-green-500 mr-1 sm:mr-2" fill="currentColor" viewBox="0 0 20 20">
                 <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
               </svg>
               Kapıda Ödeme
             </div>
-            <div className="flex items-center text-sm text-gray-500">
-              <svg className="w-5 h-5 text-green-500 mr-2" fill="currentColor" viewBox="0 0 20 20">
+            <div className="flex items-center text-gray-500">
+              <svg className="w-4 h-4 sm:w-5 sm:h-5 text-green-500 mr-1 sm:mr-2" fill="currentColor" viewBox="0 0 20 20">
                 <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
               </svg>
               7/24 Destek
